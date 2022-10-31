@@ -48,10 +48,12 @@ export default ({
 
       const existingUsers = await findUsers({ andQuery: { username, email } });
 
-      existingUsers.forEach((user: any) => {
-        if (user.username === username) usernameExists = true;
-        if (user.email === email) emailExists = true;
-      });
+      if (existingUsers) {
+        existingUsers.forEach((user: any) => {
+          if (user.username === username) usernameExists = true;
+          if (user.email === email) emailExists = true;
+        });
+      }
 
       if (usernameExists && emailExists) {
         return errorResponse(
@@ -91,10 +93,14 @@ export default ({
         subject: "Account Activation for Sports Complex",
         text: `Hello ${username}, welcome to our Sports Complex!
                 
-        Click this link in the next 24 hours to activate your account: ${process.env.BASE_URL}/activation?t=${tokenString}&c=${activationCode}
+        Click this link in the next 24 hours to activate your account: ${process.env.BASE_URL}/api/activate?t=${tokenString}&c=${activationCode}
         
         If you miss the 24 hour deadline contact our web admins.`,
       });
+
+      delete user.hash;
+      delete user.salt;
+      delete user.activationCode;
 
       return successResponse(res, { newUser: user });
     } catch (error: any) {

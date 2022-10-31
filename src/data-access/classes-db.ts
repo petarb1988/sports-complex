@@ -1,6 +1,6 @@
 import { Schema, model } from "mongoose";
 
-interface review {
+export interface IReview {
   userId: string;
   username: string;
   rating: number;
@@ -8,20 +8,20 @@ interface review {
   submittedAt: number;
 }
 
-interface member {
+export interface IMember {
   userId: string;
   username: string;
   enrolledAt: number;
 }
 
-interface IClass {
+export interface IClass {
   sport: string;
   age: string;
   duration: number;
   description: string;
   schedule?: number[];
-  members?: member[];
-  reviews?: review[];
+  members?: IMember[];
+  reviews?: IReview[];
   averageRating?: number;
   createdAt: number;
   modifiedAt: number;
@@ -34,20 +34,27 @@ const classSchema = new Schema<IClass>(
     duration: { type: Number, required: true },
     description: { type: String, required: true },
     schedule: [Number],
-    members: [{ userId: String, username: String, enrolledAt: Number }],
+    members: [
+      {
+        userId: String,
+        username: String,
+        enrolledAt: Number,
+      },
+    ],
     reviews: [
       {
         userId: String,
         username: String,
         rating: Number,
         comment: String,
+        submittedAt: Number,
       },
     ],
     averageRating: Number,
     createdAt: { type: Number, default: Date.now },
     modifiedAt: { type: Number, default: Date.now },
   },
-  { collection: "classes", id: true }
+  { collection: "classes" }
 );
 
 const classModel = model<IClass>("Class", classSchema, "classes");
@@ -58,7 +65,8 @@ const classModel = model<IClass>("Class", classSchema, "classes");
 
 export async function createClass(data: any) {
   const result = await classModel.create(data);
-  return result.toObject();
+  const { _id, ...other } = result.toObject();
+  return { id: _id.toString(), ...other };
 }
 
 export async function findClassesWithPagination({
@@ -76,7 +84,10 @@ export async function findClassesWithPagination({
     .limit(size)
     .lean();
   if (result.length === 0) return null;
-  return result;
+  return result.map((item) => {
+    const { _id, ...other } = item;
+    return { id: _id.toString(), ...other };
+  });
 }
 
 export async function findClassesWithPaginationBySportsAndAgeLevels({
@@ -96,23 +107,29 @@ export async function findClassesWithPaginationBySportsAndAgeLevels({
     .limit(size)
     .lean();
   if (result.length === 0) return null;
-  return result;
+  return result.map((item) => {
+    const { _id, ...other } = item;
+    return { id: _id.toString(), ...other };
+  });
 }
 
 export async function findOneClass(queryParams: object) {
   const result = await classModel.findOne({ ...queryParams }).lean();
   if (result === null) return null;
-  return result;
+  const { _id, ...other } = result;
+  return { id: _id.toString(), ...other };
 }
 
 export async function updateOneClass({ id, updateData }: { id: string; updateData: object }) {
   const result = await classModel.findByIdAndUpdate(id, { ...updateData }, { new: true }).lean();
   if (result === null) return null;
-  return result;
+  const { _id, ...other } = result;
+  return { id: _id.toString(), ...other };
 }
 
 export async function deleteOneClass(id: string) {
   const result = await classModel.findByIdAndRemove(id).lean();
   if (result === null) return null;
-  return result;
+  const { _id, ...other } = result;
+  return { id: _id.toString(), ...other };
 }

@@ -14,7 +14,7 @@ export default ({ successResponse, errorResponse, Const, findUser, updateUser }:
       const userToken: string = `${req.query.t}`;
       const activationCode: string = `${req.query.c}`;
 
-      const user = await findUser({ "token.token": userToken });
+      const user = await findUser({ "token.tempToken": userToken });
 
       if (Date.now() - user.token.createdAt > Const.activationExpirationDuration) {
         return errorResponse(res, "Activation Controller Error: activation code expired");
@@ -28,7 +28,7 @@ export default ({ successResponse, errorResponse, Const, findUser, updateUser }:
         updateData: { "token.tempToken": null },
       });
 
-      return successResponse(res, { user: updatedUser });
+      return successResponse(res);
     } catch (error: any) {
       return errorResponse(res, `Activation Controller Error: ${error.message}`);
     }

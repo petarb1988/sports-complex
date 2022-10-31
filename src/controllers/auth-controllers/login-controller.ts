@@ -54,14 +54,16 @@ export default ({
       const tokenString = generateRandomString();
       const updatedUser = await updateUser({
         id: user.id,
-        "token.token": tokenString,
-        "token.createdAt": Date.now(),
-        "token.neverExpire": neverExpire,
+        updateData: {
+          "token.token": tokenString,
+          "token.createdAt": Date.now(),
+          "token.neverExpire": neverExpire,
+        },
       });
 
       req.session!.userToken = tokenString;
 
-      return successResponse(res, { user: updatedUser });
+      return successResponse(res);
     } catch (error: any) {
       return errorResponse(res, `Login Controller Error: ${error.message}`);
     }

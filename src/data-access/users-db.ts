@@ -1,20 +1,20 @@
 import { Schema, model } from "mongoose";
 import { Const } from "../config";
 
-interface token {
+export interface IToken {
   token?: string;
   tempToken?: string;
   createdAt: number;
   neverExpire: boolean;
 }
 
-interface sportClass {
+export interface ISportClass {
   classId: string;
   enrolledAt: number;
 }
 
-interface IUser {
-  token: token;
+export interface IUser {
+  token: IToken;
   username: string;
   hash: string;
   salt: string;
@@ -24,7 +24,7 @@ interface IUser {
   firstName: string;
   lastName: string;
   birthDate: string;
-  sportClasses?: sportClass[];
+  sportClasses?: ISportClass[];
   createdAt: number;
   modifiedAt: number;
 }
@@ -50,7 +50,7 @@ const userSchema = new Schema<IUser>(
     createdAt: { type: Number, default: Date.now },
     modifiedAt: { type: Number, default: Date.now },
   },
-  { collection: "users", id: true }
+  { collection: "users" }
 );
 
 const userModel = model<IUser>("User", userSchema, "users");
@@ -61,7 +61,8 @@ const userModel = model<IUser>("User", userSchema, "users");
 
 export async function createUser(data: any) {
   const result = await userModel.create(data);
-  return result.toObject();
+  const { _id, ...other } = result.toObject();
+  return { id: _id.toString(), ...other };
 }
 
 export async function findUsersWithPagination({
@@ -79,7 +80,10 @@ export async function findUsersWithPagination({
     .limit(size)
     .lean();
   if (result.length === 0) return null;
-  return result;
+  return result.map((item) => {
+    const { _id, ...other } = item;
+    return { id: _id.toString(), ...other };
+  });
 }
 
 export async function findUsersByIdsWithPagination({
@@ -97,23 +101,29 @@ export async function findUsersByIdsWithPagination({
     .limit(size)
     .lean();
   if (result.length === 0) return null;
-  return result;
+  return result.map((item) => {
+    const { _id, ...other } = item;
+    return { id: _id.toString(), ...other };
+  });
 }
 
 export async function findOneUser(queryParams: object) {
   const result = await userModel.findOne({ ...queryParams }).lean();
   if (result === null) return null;
-  return result;
+  const { _id, ...other } = result;
+  return { id: _id.toString(), ...other };
 }
 
 export async function updateOneUser({ id, updateData }: { id: string; updateData: object }) {
   const result = await userModel.findByIdAndUpdate(id, { ...updateData }, { new: true }).lean();
   if (result === null) return null;
-  return result;
+  const { _id, ...other } = result;
+  return { id: _id.toString(), ...other };
 }
 
 export async function deleteOneUser(id: string) {
   const result = await userModel.findByIdAndRemove(id).lean();
   if (result === null) return null;
-  return result;
+  const { _id, ...other } = result;
+  return { id: _id.toString(), ...other };
 }

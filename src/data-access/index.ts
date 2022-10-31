@@ -1,5 +1,8 @@
 import initDatabase from "./init-database";
 import {
+  IToken,
+  ISportClass,
+  IUser,
   createUser,
   findUsersWithPagination,
   findUsersByIdsWithPagination,
@@ -9,6 +12,9 @@ import {
 } from "./users-db";
 
 import {
+  IReview,
+  IMember,
+  IClass,
   createClass,
   findClassesWithPagination,
   findClassesWithPaginationBySportsAndAgeLevels,
@@ -21,6 +27,9 @@ export {
   // init
   initDatabase,
   // users
+  IToken,
+  ISportClass,
+  IUser,
   createUser,
   findUsersWithPagination,
   findUsersByIdsWithPagination,
@@ -28,6 +37,9 @@ export {
   updateOneUser,
   deleteOneUser,
   //classes
+  IReview,
+  IMember,
+  IClass,
   createClass,
   findClassesWithPagination,
   findClassesWithPaginationBySportsAndAgeLevels,
