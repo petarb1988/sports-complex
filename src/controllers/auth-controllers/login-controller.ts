@@ -63,7 +63,7 @@ export default ({
 
       req.session!.userToken = tokenString;
 
-      return successResponse(res);
+      return successResponse(res, { loggedInUser: updatedUser });
     } catch (error: any) {
       return errorResponse(res, `Login Controller Error: ${error.message}`);
     }

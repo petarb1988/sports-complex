@@ -37,7 +37,7 @@ const userSchema = new Schema<IUser>(
       createdAt: Number,
       neverExpire: { type: Boolean, default: false },
     },
-    username: { type: String, required: true },
+    username: { type: String, required: true, index: true },
     hash: { type: String, required: true },
     salt: { type: String, required: true },
     email: { type: String, required: true },

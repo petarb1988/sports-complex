@@ -98,10 +98,6 @@ export default ({
         If you miss the 24 hour deadline contact our web admins.`,
       });
 
-      delete user.hash;
-      delete user.salt;
-      delete user.activationCode;
-
       return successResponse(res, { newUser: user });
     } catch (error: any) {
       return errorResponse(res, `Registration Controller Error: ${error.message}`);

@@ -29,8 +29,8 @@ export interface IClass {
 
 const classSchema = new Schema<IClass>(
   {
-    sport: { type: String, required: true },
-    age: { type: String, required: true },
+    sport: { type: String, required: true, index: true },
+    age: { type: String, required: true, index: true },
     duration: { type: Number, required: true },
     description: { type: String, required: true },
     schedule: [Number],

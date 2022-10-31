@@ -28,7 +28,7 @@ export default ({ successResponse, errorResponse, Const, findUser, updateUser }:
         updateData: { "token.tempToken": null },
       });
 
-      return successResponse(res);
+      return successResponse(res, { activatedUser: updatedUser });
     } catch (error: any) {
       return errorResponse(res, `Activation Controller Error: ${error.message}`);
     }
