@@ -1,35 +1,7 @@
 import { Schema, model } from "mongoose";
-import { Const } from "../config";
+import { Const, Interfaces } from "../config";
 
-export interface IToken {
-  token?: string;
-  tempToken?: string;
-  createdAt: number;
-  neverExpire: boolean;
-}
-
-export interface ISportClass {
-  classId: string;
-  enrolledAt: number;
-}
-
-export interface IUser {
-  token: IToken;
-  username: string;
-  hash: string;
-  salt: string;
-  email: string;
-  activationCode?: string;
-  role: number;
-  firstName: string;
-  lastName: string;
-  birthDate: string;
-  sportClasses?: ISportClass[];
-  createdAt: number;
-  modifiedAt: number;
-}
-
-const userSchema = new Schema<IUser>(
+const userSchema = new Schema<Interfaces.IUser>(
   {
     token: {
       token: String,
@@ -53,7 +25,7 @@ const userSchema = new Schema<IUser>(
   { collection: "users" }
 );
 
-const userModel = model<IUser>("User", userSchema, "users");
+const userModel = model<Interfaces.IUser>("User", userSchema, "users");
 
 //
 // *************************************************************************

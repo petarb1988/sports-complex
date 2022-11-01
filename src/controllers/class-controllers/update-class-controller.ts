@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import { Interfaces } from "../../config";
 
 interface InputValue {
   successResponse: Function;
@@ -28,7 +29,7 @@ export default ({ successResponse, errorResponse, findClass, updateClass }: Inpu
 
       const classId: string = req.params.id;
 
-      const sportClass = await findClass({ id: classId });
+      const sportClass: Interfaces.IClass = await findClass({ id: classId });
 
       if (!sportClass) {
         return errorResponse(
@@ -37,7 +38,7 @@ export default ({ successResponse, errorResponse, findClass, updateClass }: Inpu
         );
       }
 
-      const newReviews: review[] | undefined = reqBody.reviews ?? undefined;
+      const newReviews: Interfaces.IReview[] | undefined = reqBody.reviews ?? undefined;
       let averageRating: number = 0;
       if (newReviews) {
         let sum: number = 0;
@@ -54,7 +55,7 @@ export default ({ successResponse, errorResponse, findClass, updateClass }: Inpu
         age?: number;
         schedule?: number[];
         members?: string[];
-        reviews?: review[];
+        reviews?: Interfaces.IReview[];
         averageRating?: number;
         modifiedAt: number;
       } = {

@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import { Interfaces } from "../../config";
 
 interface InputValue {
   successResponse: Function;
@@ -9,32 +10,6 @@ interface InputValue {
   updateClass: Function;
   getUserAge: Function;
   sanitizeClassData: Function;
-}
-
-interface sportClass {
-  classId: string;
-  enrolledAt: number;
-}
-
-interface review {
-  userId: string;
-  username: string;
-  rating: number;
-  comment: string;
-  submittedAt: number;
-}
-
-interface IClass {
-  sport: string;
-  age: string;
-  duration: number;
-  description: string;
-  schedule?: number[];
-  members?: string[];
-  reviews?: review[];
-  averageRating?: number;
-  createdAt: number;
-  modifiedAt: number;
 }
 
 export default ({
@@ -60,7 +35,7 @@ export default ({
         );
       }
 
-      const sportClass: IClass = await findClass({ id: classId });
+      const sportClass: Interfaces.IClass | null = await findClass({ id: classId });
 
       if (!sportClass) {
         return errorResponse(
@@ -84,10 +59,10 @@ export default ({
         return errorResponse(res, `Enroll User Controller Error: class is full`);
       }
 
-      const members: string[] | undefined = sportClass.members;
+      const members: Interfaces.IMember[] | undefined = sportClass.members;
       if (members) members.push(user.id);
 
-      const sportClasses: sportClass[] = user.sportClasses;
+      const sportClasses: Interfaces.ISportClass[] | undefined = user.sportClasses;
       if (sportClasses) sportClasses.push({ classId, enrolledAt: Date.now() });
 
       const updatedUser = await updateUser({ id: user.id, updateData: { sportClasses } });

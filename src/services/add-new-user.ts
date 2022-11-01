@@ -1,8 +1,4 @@
-interface InputValue {
-  createUser: Function;
-}
-
-export default ({ createUser }: InputValue) =>
+export default ({ createUser }: { createUser: Function }) =>
   async (data: object) => {
     const user = await createUser(data);
     return user;

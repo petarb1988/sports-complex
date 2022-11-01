@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import { Interfaces } from "../../config";
 
 interface InputValue {
   successResponse: Function;
@@ -7,32 +8,6 @@ interface InputValue {
   updateUser: Function;
   updateClass: Function;
   sanitizeClassData: Function;
-}
-
-interface sportClass {
-  classId: string;
-  enrolledAt: number;
-}
-
-interface review {
-  userId: string;
-  username: string;
-  rating: number;
-  comment: string;
-  submittedAt: number;
-}
-
-interface IClass {
-  sport: string;
-  age: string;
-  duration: number;
-  description: string;
-  schedule?: number[];
-  members?: string[];
-  reviews?: review[];
-  averageRating?: number;
-  createdAt: number;
-  modifiedAt: number;
 }
 
 export default ({
@@ -49,7 +24,7 @@ export default ({
       const classId: string = req.params.id;
       const user = res.locals.user;
 
-      const sportClass: IClass = await findClass({ id: classId });
+      const sportClass: Interfaces.IClass = await findClass({ id: classId });
 
       if (!sportClass) {
         return errorResponse(
@@ -58,13 +33,13 @@ export default ({
         );
       }
 
-      let members: string[] | undefined = sportClass.members;
+      let members: Interfaces.IMember[] | undefined = sportClass.members;
       if (members)
         members = members.filter((member) => {
           member !== user.id;
         });
 
-      let sportClasses: sportClass[] = user.sportClasses;
+      let sportClasses: Interfaces.ISportClass[] = user.sportClasses;
       if (sportClasses)
         sportClasses = sportClasses.filter((sportClass) => {
           sportClass.classId !== classId;

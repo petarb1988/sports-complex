@@ -1,33 +1,7 @@
 import { Schema, model } from "mongoose";
+import { Interfaces } from "../config";
 
-export interface IReview {
-  userId: string;
-  username: string;
-  rating: number;
-  comment: string;
-  submittedAt: number;
-}
-
-export interface IMember {
-  userId: string;
-  username: string;
-  enrolledAt: number;
-}
-
-export interface IClass {
-  sport: string;
-  age: string;
-  duration: number;
-  description: string;
-  schedule?: number[];
-  members?: IMember[];
-  reviews?: IReview[];
-  averageRating?: number;
-  createdAt: number;
-  modifiedAt: number;
-}
-
-const classSchema = new Schema<IClass>(
+const classSchema = new Schema<Interfaces.IClass>(
   {
     sport: { type: String, required: true, index: true },
     age: { type: String, required: true, index: true },
@@ -57,7 +31,7 @@ const classSchema = new Schema<IClass>(
   { collection: "classes" }
 );
 
-const classModel = model<IClass>("Class", classSchema, "classes");
+const classModel = model<Interfaces.IClass>("Class", classSchema, "classes");
 
 //
 // *************************************************************************

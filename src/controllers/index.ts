@@ -1,4 +1,3 @@
-import logger from "../logger";
 import { successResponse, errorResponse } from "./response-templates";
 import { Const } from "../config";
 import {

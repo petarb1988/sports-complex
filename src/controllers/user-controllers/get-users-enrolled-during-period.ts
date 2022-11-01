@@ -1,16 +1,11 @@
 import { Request, Response } from "express";
+import { Interfaces } from "../../config";
 
 interface InputValue {
   successResponse: Function;
   errorResponse: Function;
   findClass: Function;
   findUsersByIds: Function;
-}
-
-interface member {
-  userId: string;
-  username: string;
-  enrolledAt: number;
 }
 
 export default ({ successResponse, errorResponse, findClass, findUsersByIds }: InputValue) =>
@@ -24,10 +19,10 @@ export default ({ successResponse, errorResponse, findClass, findUsersByIds }: I
 
       const sportClass = await findClass({ id: classId });
       const membersIds: string[] = sportClass.members
-        .filter((member: member) => {
+        .filter((member: Interfaces.IMember) => {
           member.enrolledAt >= startDate && member.enrolledAt <= endDate;
         })
-        .map((member: member) => {
+        .map((member: Interfaces.IMember) => {
           member.userId;
         });
 

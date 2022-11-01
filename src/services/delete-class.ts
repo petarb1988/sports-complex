@@ -1,8 +1,4 @@
-interface InputValue {
-  deleteOneClass: Function;
-}
-
-export default ({ deleteOneClass }: InputValue) =>
+export default ({ deleteOneClass }: { deleteOneClass: Function }) =>
   async (id: string) => {
     const deletedClass = await deleteOneClass(id);
     return deletedClass;

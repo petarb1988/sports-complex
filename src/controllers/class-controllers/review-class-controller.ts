@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import { Interfaces } from "../../config";
 
 interface InputValue {
   successResponse: Function;
@@ -6,14 +7,6 @@ interface InputValue {
   findClass: Function;
   updateClass: Function;
   sanitizeClassData: Function;
-}
-
-interface review {
-  userId: string;
-  username: string;
-  rating: number;
-  comment: string;
-  submittedAt: number;
 }
 
 export default ({
@@ -30,7 +23,7 @@ export default ({
       const isAdmin: boolean = res.locals.isAdmin;
       const { rating, comment }: { rating: number; comment: string } = req.body;
 
-      const sportClass = await findClass({ id: classId ?? null });
+      const sportClass: Interfaces.IClass = await findClass({ id: classId ?? null });
 
       if (!sportClass) {
         return errorResponse(
@@ -39,9 +32,9 @@ export default ({
         );
       }
 
-      const reviews: review[] = sportClass.reviews;
+      const reviews: Interfaces.IReview[] = sportClass.reviews ?? [];
 
-      const reviewData: review = {
+      const reviewData: Interfaces.IReview = {
         userId: user.id,
         username: user.username,
         rating,
@@ -50,7 +43,7 @@ export default ({
       };
 
       reviews.push(reviewData);
-      reviews.sort((a: review, b: review) => b.submittedAt - a.submittedAt);
+      reviews.sort((a: Interfaces.IReview, b: Interfaces.IReview) => b.submittedAt - a.submittedAt);
 
       let sum: number = 0;
       reviews.forEach((review) => {
@@ -63,7 +56,7 @@ export default ({
         averageRating,
       };
 
-      let updatedClass = await updateClass({ id: classId, updateData });
+      let updatedClass: Interfaces.IClass = await updateClass({ id: classId, updateData });
 
       if (!isAdmin && updatedClass !== null) updatedClass = sanitizeClassData(updatedClass);
 
