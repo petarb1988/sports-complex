@@ -17,6 +17,7 @@ import {
   updateUser,
   deleteUser,
   sanitizeUserData,
+  getUserAge,
   // classes
   addNewClass,
   findClass,
@@ -123,6 +124,7 @@ export const enrollUserController = makeEnrollUserController({
   findClass,
   updateUser,
   updateClass,
+  getUserAge,
   sanitizeClassData,
 });
 export const unenrollUserController = makeUnenrollUserController({

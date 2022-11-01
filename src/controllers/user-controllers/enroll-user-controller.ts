@@ -7,6 +7,7 @@ interface InputValue {
   findClass: Function;
   updateUser: Function;
   updateClass: Function;
+  getUserAge: Function;
   sanitizeClassData: Function;
 }
 
@@ -43,6 +44,7 @@ export default ({
     findClass,
     updateUser,
     updateClass,
+    getUserAge,
     sanitizeClassData,
   }: InputValue) =>
   async (req: Request, res: Response) => {
@@ -66,6 +68,18 @@ export default ({
           `Enroll User Controller Error: class with id ${classId} not found`
         );
       }
+
+      const userAge: number = getUserAge(user.birthDate);
+      if (
+        userAge <= Const.ageLevelLimits[sportClass.age][0] ||
+        userAge > Const.ageLevelLimits[sportClass.age][1]
+      ) {
+        return errorResponse(
+          res,
+          `Enroll User Controller Error: user's age is not appropriate for this class`
+        );
+      }
+
       if (sportClass?.members?.length === Const.maxUsersPerClass) {
         return errorResponse(res, `Enroll User Controller Error: class is full`);
       }

@@ -1,3 +1,13 @@
+/*
+url: POST api/register
+request body: username {String}
+              password {String}
+              email {String}
+              firstName {String}
+              lastName {String}
+              birthDate {String}
+*/
+
 import { Request, Response } from "express";
 
 interface InputValue {
@@ -98,7 +108,7 @@ export default ({
         If you miss the 24 hour deadline contact our web admins.`,
       });
 
-      return successResponse(res, { newUser: user });
+      return successResponse(res, { user });
     } catch (error: any) {
       return errorResponse(res, `Registration Controller Error: ${error.message}`);
     }

@@ -27,8 +27,7 @@ export const Const = Object.freeze({
 
   allowedAgeLevels: ["children", "youth", "young_adults", "adults"],
 
-  ageBaseLimit: 8,
-  ageUpperLimits: { children: 13, youth: 18, young_adults: 26, adults: 200 },
+  ageLevelLimits: { children: [7, 12], youth: [12, 18], young_adults: [18, 25], adults: [25, 200] },
 
   maxUsersPerClass: 10,
   maxClassesPerUser: 2,

@@ -14,6 +14,24 @@ export default ({ successResponse, errorResponse, updateUser, sanitizeUserData }
       const requestUser = res.locals.user;
       const isAdmin: boolean = res.locals.isAdmin;
 
+      const {
+        username,
+        password,
+        email,
+        firstName,
+        lastName,
+        birthDate,
+        role,
+      }: {
+        username?: string;
+        password?: string;
+        email?: string;
+        firstName?: string;
+        lastName?: string;
+        birthDate?: string;
+        role?: number;
+      } = req.body;
+
       if (!isAdmin && requestUser.id !== userId) {
         return errorResponse(
           res,
@@ -23,12 +41,21 @@ export default ({ successResponse, errorResponse, updateUser, sanitizeUserData }
 
       const updateData: {
         username?: string;
+        password?: string;
         email?: string;
         role?: number;
         firstName?: string;
         lastName?: string;
         birthDate?: string;
-      } = req.body;
+      } = {
+        username,
+        password,
+        email,
+        firstName,
+        lastName,
+        birthDate,
+        role,
+      };
 
       if (!isAdmin) {
         delete updateData.role;

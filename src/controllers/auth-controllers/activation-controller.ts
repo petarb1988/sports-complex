@@ -1,3 +1,9 @@
+/*
+url: GET api/activate
+url params: t  token
+            c  activation code
+*/
+
 import { Request, Response } from "express";
 
 interface InputValue {
@@ -28,7 +34,7 @@ export default ({ successResponse, errorResponse, Const, findUser, updateUser }:
         updateData: { "token.tempToken": null },
       });
 
-      return successResponse(res, { activatedUser: updatedUser });
+      return successResponse(res, { user: updatedUser });
     } catch (error: any) {
       return errorResponse(res, `Activation Controller Error: ${error.message}`);
     }

@@ -23,6 +23,7 @@ import makeFindUsersByIds from "./find-users-by-ids";
 import makeUpdateUser from "./update-user";
 import makeDeleteUser from "./delete-user";
 import makeSanitizeUserData from "./sanitize-user-data";
+import makeGetUserAge from "./get-user-age";
 
 export const addNewUser = makeAddNewUser({ createUser });
 export const findUser = makeFindUser({ findOneUser });
@@ -31,6 +32,7 @@ export const findUsersByIds = makeFindUsersByIds({ findUsersByIdsWithPagination 
 export const updateUser = makeUpdateUser({ updateOneUser });
 export const deleteUser = makeDeleteUser({ deleteOneUser });
 export const sanitizeUserData = makeSanitizeUserData();
+export const getUserAge = makeGetUserAge();
 
 // classes
 import makeAddNewClass from "./add-new-class";

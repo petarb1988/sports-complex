@@ -1,3 +1,7 @@
+/*
+url: GET api/logout
+*/
+
 import { Request, Response } from "express";
 
 interface InputValue {

@@ -1,3 +1,10 @@
+/*
+url: POST api/login
+request body: username {String}
+              password {String}
+              neverExpire {Boolean}
+*/
+
 import { Request, Response } from "express";
 
 interface InputValue {
@@ -63,7 +70,7 @@ export default ({
 
       req.session!.userToken = tokenString;
 
-      return successResponse(res, { loggedInUser: updatedUser });
+      return successResponse(res, { user: updatedUser });
     } catch (error: any) {
       return errorResponse(res, `Login Controller Error: ${error.message}`);
     }

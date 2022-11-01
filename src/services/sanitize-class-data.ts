@@ -36,6 +36,7 @@ export default () => (data: IClass) => {
     duration,
     description,
     schedule,
+    members: !data?.members ? 0 : data.members.length,
     reviews: sanitizedReviews ?? [],
     averageRating,
   };
