@@ -16,6 +16,6 @@ export default ({ successResponse, errorResponse }: InputValue) =>
 
       return successResponse(res);
     } catch (error: any) {
-      return errorResponse(res, `Logout Controller Error: ${error.message}`);
+      return errorResponse(res, `Logout Controller Error: ${error}`);
     }
   };

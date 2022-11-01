@@ -52,6 +52,6 @@ export default ({
 
       return successResponse(res, { classes: sportClasses ?? {} });
     } catch (error: any) {
-      return errorResponse(res, `Get Classes Controller Error: ${error.message}`);
+      return errorResponse(res, `Get Classes Controller Error: ${error}`);
     }
   };

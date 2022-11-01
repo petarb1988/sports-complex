@@ -35,9 +35,6 @@ export default ({ successResponse, errorResponse, findClass, findUsersByIds }: I
 
       return successResponse(res, { users: users ?? {} });
     } catch (error: any) {
-      return errorResponse(
-        res,
-        `Get Users Enrolled During Period Controller Error: ${error.message}`
-      );
+      return errorResponse(res, `Get Users Enrolled During Period Controller Error: ${error}`);
     }
   };

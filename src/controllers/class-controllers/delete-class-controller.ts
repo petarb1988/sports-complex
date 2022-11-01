@@ -22,6 +22,6 @@ export default ({ successResponse, errorResponse, deleteClass }: InputValue) =>
 
       return successResponse(res, { deletedClass });
     } catch (error: any) {
-      return errorResponse(res, `Delete Class Controller Error: ${error.message}`);
+      return errorResponse(res, `Delete Class Controller Error: ${error}`);
     }
   };

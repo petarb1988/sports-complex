@@ -20,6 +20,6 @@ export default ({ successResponse, errorResponse, findClass, sanitizeClassData }
 
       successResponse(res, { class: sportClass });
     } catch (error: any) {
-      return errorResponse(res, `Get Class Controller Error: ${error.message}`);
+      return errorResponse(res, `Get Class Controller Error: ${error}`);
     }
   };

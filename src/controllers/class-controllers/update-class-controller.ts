@@ -71,6 +71,6 @@ export default ({ successResponse, errorResponse, findClass, updateClass }: Inpu
 
       return successResponse(res, { updatedClass: updatedClass ?? {} });
     } catch (error: any) {
-      return errorResponse(res, `Update Class Controller Error: ${error.message}`);
+      return errorResponse(res, `Update Class Controller Error: ${error}`);
     }
   };

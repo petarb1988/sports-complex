@@ -110,6 +110,6 @@ export default ({
 
       return successResponse(res, { user });
     } catch (error: any) {
-      return errorResponse(res, `Registration Controller Error: ${error.message}`);
+      return errorResponse(res, `Registration Controller Error: ${error}`);
     }
   };

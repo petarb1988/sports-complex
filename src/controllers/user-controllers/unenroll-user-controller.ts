@@ -76,6 +76,6 @@ export default ({
 
       successResponse(res, { updatedUser: updatedUser ?? {}, updatedClass: updatedClass ?? {} });
     } catch (error: any) {
-      return errorResponse(res, `Unenroll User Controller Error: ${error.message}`);
+      return errorResponse(res, `Unenroll User Controller Error: ${error}`);
     }
   };

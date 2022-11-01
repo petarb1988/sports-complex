@@ -6,22 +6,32 @@ export default ({ findUsersWithPagination }: { findUsersWithPagination: Function
     let finalQueryObject: any = {
       page: queryObject.page ?? 1,
       size: queryObject.size ?? 20,
+      queryParams: {},
     };
 
     if (!andQuery) {
       const tempQueryArray: object[] = [];
-
       const keysArray: string[] = Object.keys(orQuery);
 
-      keysArray.forEach((key: string) => {
-        const tempObject: any = {};
-        tempObject[key] = orQuery[key];
-        tempQueryArray.push(tempObject);
-      });
+      if (keysArray.length === 0) {
+        finalQueryObject.queryParams = {};
+      } else {
+        keysArray.forEach((key: string) => {
+          const tempObject: any = {};
+          tempObject[key] = orQuery[key];
+          tempQueryArray.push(tempObject);
+        });
 
-      finalQueryObject.queryParams["$or"] = tempQueryArray;
+        finalQueryObject.queryParams["$or"] = tempQueryArray;
+      }
     } else if (!orQuery) {
-      finalQueryObject.queryParams = andQuery;
+      const keysArray: string[] = Object.keys(andQuery);
+
+      if (keysArray.length === 0) {
+        finalQueryObject.queryParams = {};
+      } else {
+        finalQueryObject.queryParams = andQuery;
+      }
     } else {
       finalQueryObject.queryParams = {};
     }

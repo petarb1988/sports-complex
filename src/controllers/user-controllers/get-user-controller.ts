@@ -19,6 +19,6 @@ export default ({ successResponse, errorResponse, findUser, sanitizeUserData }: 
 
       successResponse(res, { user: user ?? {} });
     } catch (error: any) {
-      return errorResponse(res, `Get User Controller Error: ${error.message}`);
+      return errorResponse(res, `Get User Controller Error: ${error}`);
     }
   };

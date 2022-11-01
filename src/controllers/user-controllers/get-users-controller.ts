@@ -18,7 +18,7 @@ export default ({ successResponse, errorResponse, findUsers, sanitizeUserData }:
       const searchRegex: RegExp | null = !search ? null : new RegExp(search, "i");
 
       const orQuery = !search
-        ? null
+        ? {}
         : { username: searchRegex, firstName: searchRegex, lastName: searchRegex };
 
       let users = await findUsers({ page, size, orQuery });
@@ -27,6 +27,6 @@ export default ({ successResponse, errorResponse, findUsers, sanitizeUserData }:
 
       return successResponse(res, { users: users ?? {} });
     } catch (error: any) {
-      return errorResponse(res, `Get Users Controller Error: ${error.message}`);
+      return errorResponse(res, `Get Users Controller Error: ${error}`);
     }
   };

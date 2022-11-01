@@ -22,6 +22,12 @@ export default ({ successResponse, errorResponse, Const, findUser, updateUser }:
 
       const user = await findUser({ "token.tempToken": userToken });
 
+      if (!user) {
+        return errorResponse(
+          res,
+          "Activation Controller Error: no user found with provided temporary token or user already activated"
+        );
+      }
       if (Date.now() - user.token.createdAt > Const.activationExpirationDuration) {
         return errorResponse(res, "Activation Controller Error: activation code expired");
       }
@@ -36,6 +42,6 @@ export default ({ successResponse, errorResponse, Const, findUser, updateUser }:
 
       return successResponse(res, { user: updatedUser });
     } catch (error: any) {
-      return errorResponse(res, `Activation Controller Error: ${error.message}`);
+      return errorResponse(res, `Activation Controller Error: ${error}`);
     }
   };

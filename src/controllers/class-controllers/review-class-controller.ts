@@ -69,6 +69,6 @@ export default ({
 
       successResponse(res, { updatedClass });
     } catch (error: any) {
-      return errorResponse(res, `Review Class Controller Error: ${error.message}`);
+      return errorResponse(res, `Review Class Controller Error: ${error}`);
     }
   };

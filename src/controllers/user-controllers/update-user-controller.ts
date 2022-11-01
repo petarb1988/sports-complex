@@ -65,8 +65,8 @@ export default ({ successResponse, errorResponse, updateUser, sanitizeUserData }
       let updatedUser = await updateUser({ id: userId, updateData });
       if (!isAdmin) updatedUser = sanitizeUserData(updatedUser);
 
-      return successResponse(res, { updatedUser: updatedUser ?? {} });
+      return successResponse(res, { user: updatedUser ?? {} });
     } catch (error: any) {
-      return errorResponse(res, `Update User Controller Error: ${error.message}`);
+      return errorResponse(res, `Update User Controller Error: ${error}`);
     }
   };

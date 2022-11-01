@@ -48,10 +48,11 @@ export default ({
 
       const existingUsers = await findUsers({ orQuery: { username, email } });
 
-      existingUsers.forEach((user: any) => {
-        if (user.username === username) usernameExists = true;
-        if (user.email === email) emailExists = true;
-      });
+      if (existingUsers)
+        existingUsers.forEach((user: any) => {
+          if (user.username === username) usernameExists = true;
+          if (user.email === email) emailExists = true;
+        });
 
       if (usernameExists && emailExists) {
         return errorResponse(
@@ -91,6 +92,6 @@ export default ({
 
       return successResponse(res, { newUser: user });
     } catch (error: any) {
-      return errorResponse(res, `Create User Controller Error: ${error.message}`);
+      return errorResponse(res, `Create User Controller Error: ${error}`);
     }
   };

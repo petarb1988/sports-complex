@@ -72,6 +72,6 @@ export default ({ successResponse, errorResponse, Const, addNewClass, findClasse
 
       return successResponse(res, { newClass: sportClass });
     } catch (error: any) {
-      return errorResponse(res, `Create Class Controller Error: ${error.message}`);
+      return errorResponse(res, `Create Class Controller Error: ${error}`);
     }
   };

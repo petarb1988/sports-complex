@@ -72,6 +72,6 @@ export default ({
 
       return successResponse(res, { user: updatedUser });
     } catch (error: any) {
-      return errorResponse(res, `Login Controller Error: ${error.message}`);
+      return errorResponse(res, `Login Controller Error: ${error}`);
     }
   };
