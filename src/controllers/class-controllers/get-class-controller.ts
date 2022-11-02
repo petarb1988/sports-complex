@@ -19,7 +19,7 @@ export default ({ successResponse, errorResponse, findClass, sanitizeClassData }
       if (!isAdmin && sportClass !== null) sportClass = sanitizeClassData(sportClass);
 
       successResponse(res, { class: sportClass });
-    } catch (error: any) {
-      return errorResponse(res, `Get Class Controller Error: ${error}`);
+    } catch (error) {
+      return errorResponse(res, `Get Class Controller Error`, error);
     }
   };

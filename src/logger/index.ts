@@ -1,11 +1,7 @@
 import util from "util";
 
-export default (msg: string, msgObject: object | null = null): void => {
-  const fixedMsgObject: string = msgObject
-    ? util.inspect(msgObject) === "{}"
-      ? ""
-      : ": " + util.inspect(msgObject)
-    : "";
+export default (msg: string, msgObject: any = null): void => {
+  const fixedMsgObject: string = !msgObject ? "" : util.inspect(msgObject);
 
   const currentDate: Date = new Date();
 
@@ -13,18 +9,9 @@ export default (msg: string, msgObject: object | null = null): void => {
   const month: string = currentDate.getUTCMonth().toString().padStart(2, "0");
   const day: string = currentDate.getUTCDate().toString().padStart(2, "0");
   const hour: string = currentDate.getUTCHours().toString().padStart(2, "0");
-  const minute: string = currentDate
-    .getUTCMinutes()
-    .toString()
-    .padStart(2, "0");
-  const second: string = currentDate
-    .getUTCSeconds()
-    .toString()
-    .padStart(2, "0");
-  const millisecond: string = currentDate
-    .getUTCMonth()
-    .toString()
-    .padStart(3, "0");
+  const minute: string = currentDate.getUTCMinutes().toString().padStart(2, "0");
+  const second: string = currentDate.getUTCSeconds().toString().padStart(2, "0");
+  const millisecond: string = currentDate.getUTCMonth().toString().padStart(3, "0");
 
   const envir = process.env.NODE_ENV;
 

@@ -29,7 +29,7 @@ export default ({ successResponse, errorResponse, findClass, findUsersByIds }: I
       const users = await findUsersByIds({ page, size, ids: membersIds });
 
       return successResponse(res, { users: users ?? {} });
-    } catch (error: any) {
-      return errorResponse(res, `Get Users Enrolled During Period Controller Error: ${error}`);
+    } catch (error) {
+      return errorResponse(res, `Get Users Enrolled During Period Controller Error`, error);
     }
   };

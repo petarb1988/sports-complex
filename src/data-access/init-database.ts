@@ -8,8 +8,8 @@ const options: ConnectOptions = { dbName };
 export default async () => {
   try {
     await connect(dbURL, options);
-    logger(`Connected!`);
+    logger(`Connected to database ${dbName}.`);
   } catch (error) {
-    logger(`Database connection error: ${error}`);
+    logger(`Database Connection Error`, error);
   }
 };

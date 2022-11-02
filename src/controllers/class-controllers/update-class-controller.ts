@@ -71,7 +71,7 @@ export default ({ successResponse, errorResponse, findClass, updateClass }: Inpu
       const updatedClass = await updateClass({ id: classId, updateData });
 
       return successResponse(res, { updatedClass: updatedClass ?? {} });
-    } catch (error: any) {
-      return errorResponse(res, `Update Class Controller Error: ${error}`);
+    } catch (error) {
+      return errorResponse(res, `Update Class Controller Error`, error);
     }
   };

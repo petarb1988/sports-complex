@@ -61,7 +61,7 @@ export default ({
       if (!isAdmin && updatedClass !== null) updatedClass = sanitizeClassData(updatedClass);
 
       successResponse(res, { updatedClass });
-    } catch (error: any) {
-      return errorResponse(res, `Review Class Controller Error: ${error}`);
+    } catch (error) {
+      return errorResponse(res, `Review Class Controller Error`, error);
     }
   };

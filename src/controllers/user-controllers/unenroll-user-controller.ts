@@ -50,7 +50,7 @@ export default ({
       if (!isAdmin && updatedClass !== null) updatedClass = sanitizeClassData(updatedClass);
 
       successResponse(res, { updatedUser: updatedUser ?? {}, updatedClass: updatedClass ?? {} });
-    } catch (error: any) {
-      return errorResponse(res, `Unenroll User Controller Error: ${error}`);
+    } catch (error) {
+      return errorResponse(res, `Unenroll User Controller Error`, error);
     }
   };

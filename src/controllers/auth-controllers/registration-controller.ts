@@ -109,7 +109,7 @@ export default ({
       });
 
       return successResponse(res, { user });
-    } catch (error: any) {
-      return errorResponse(res, `Registration Controller Error: ${error}`);
+    } catch (error) {
+      return errorResponse(res, `Registration Controller Error`, error);
     }
   };

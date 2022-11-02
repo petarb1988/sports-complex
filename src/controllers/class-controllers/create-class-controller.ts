@@ -71,7 +71,7 @@ export default ({ successResponse, errorResponse, Const, addNewClass, findClasse
       const sportClass = await addNewClass(sportClassObject);
 
       return successResponse(res, { newClass: sportClass });
-    } catch (error: any) {
-      return errorResponse(res, `Create Class Controller Error: ${error}`);
+    } catch (error) {
+      return errorResponse(res, `Create Class Controller Error`, error);
     }
   };

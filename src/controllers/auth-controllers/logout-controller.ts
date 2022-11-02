@@ -15,7 +15,7 @@ export default ({ successResponse, errorResponse }: InputValue) =>
       req.session = null;
 
       return successResponse(res);
-    } catch (error: any) {
-      return errorResponse(res, `Logout Controller Error: ${error}`);
+    } catch (error) {
+      return errorResponse(res, `Logout Controller Error`, error);
     }
   };

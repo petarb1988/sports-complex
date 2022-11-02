@@ -1,4 +1,5 @@
 import { Response } from "express";
+import logger from "../logger";
 
 export const successResponse = (res: Response, data: any = null) => {
   res.json({
@@ -11,8 +12,14 @@ export const successResponse = (res: Response, data: any = null) => {
 export const errorResponse = (
   res: Response,
   message: string = "Something went wrong",
+  error: unknown = { message: "Unknown error" },
   code: number = 500
 ) => {
+  logger(message, error);
   res.status(code);
-  res.json({ result: "failure", timestamp: Date.now(), message });
+  res.json({
+    result: "failure",
+    timestamp: Date.now(),
+    message: `${message}: ${JSON.stringify(error)}`,
+  });
 };

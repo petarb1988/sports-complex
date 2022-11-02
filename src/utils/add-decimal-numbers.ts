@@ -1,4 +1,4 @@
-export default (a: number, b: number, numberOfDecimals: number) => {
+export default (a: number, b: number, numberOfDecimals?: number) => {
   const numCharA: number = `${a}`.split(".").slice(-1).length;
   const numCharB: number = `${b}`.split(".").slice(-1).length;
 
@@ -10,7 +10,6 @@ export default (a: number, b: number, numberOfDecimals: number) => {
 
   const multiplier: number = 10 ** multiplierBase;
 
-  const result: number =
-    Math.floor(a * multiplier + b * multiplier) / multiplier;
+  const result: number = Math.floor(a * multiplier + b * multiplier) / multiplier;
   return result;
 };

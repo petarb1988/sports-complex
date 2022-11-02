@@ -91,7 +91,7 @@ export default ({
       });
 
       return successResponse(res, { newUser: user });
-    } catch (error: any) {
-      return errorResponse(res, `Create User Controller Error: ${error}`);
+    } catch (error) {
+      return errorResponse(res, `Create User Controller Error`, error);
     }
   };

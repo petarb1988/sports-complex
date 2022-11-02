@@ -51,7 +51,7 @@ export default ({
         sportClasses = sportClasses.map((sportClass: any) => sanitizeClassData(sportClass));
 
       return successResponse(res, { classes: sportClasses ?? {} });
-    } catch (error: any) {
-      return errorResponse(res, `Get Classes Controller Error: ${error}`);
+    } catch (error) {
+      return errorResponse(res, `Get Classes Controller Error`, error);
     }
   };

@@ -66,7 +66,7 @@ export default ({ successResponse, errorResponse, updateUser, sanitizeUserData }
       if (!isAdmin) updatedUser = sanitizeUserData(updatedUser);
 
       return successResponse(res, { user: updatedUser ?? {} });
-    } catch (error: any) {
-      return errorResponse(res, `Update User Controller Error: ${error}`);
+    } catch (error) {
+      return errorResponse(res, `Update User Controller Error`, error);
     }
   };

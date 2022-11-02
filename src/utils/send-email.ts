@@ -16,7 +16,7 @@ export default async ({
   try {
     await sgMail.send({ to, from, subject, text });
     return;
-  } catch (error: any) {
+  } catch (error) {
     logger(`Send Email Error: `, error);
     return;
   }

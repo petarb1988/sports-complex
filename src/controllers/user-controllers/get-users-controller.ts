@@ -26,7 +26,7 @@ export default ({ successResponse, errorResponse, findUsers, sanitizeUserData }:
         users = users.map((userData: any) => sanitizeUserData(userData));
 
       return successResponse(res, { users: users ?? {} });
-    } catch (error: any) {
-      return errorResponse(res, `Get Users Controller Error: ${error}`);
+    } catch (error) {
+      return errorResponse(res, `Get Users Controller Error`, error);
     }
   };

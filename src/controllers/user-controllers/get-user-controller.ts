@@ -18,7 +18,7 @@ export default ({ successResponse, errorResponse, findUser, sanitizeUserData }: 
       if (!isAdmin && user !== null) user = sanitizeUserData(user);
 
       successResponse(res, { user: user ?? {} });
-    } catch (error: any) {
-      return errorResponse(res, `Get User Controller Error: ${error}`);
+    } catch (error) {
+      return errorResponse(res, `Get User Controller Error`, error);
     }
   };

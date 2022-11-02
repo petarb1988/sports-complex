@@ -41,7 +41,7 @@ export default ({ successResponse, errorResponse, Const, findUser, updateUser }:
       });
 
       return successResponse(res, { user: updatedUser });
-    } catch (error: any) {
-      return errorResponse(res, `Activation Controller Error: ${error}`);
+    } catch (error) {
+      return errorResponse(res, `Activation Controller Error`, error);
     }
   };
