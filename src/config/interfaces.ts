@@ -11,6 +11,7 @@ export interface ISportClass {
 }
 
 export interface IUser {
+  id?: string;
   token: IToken;
   username: string;
   hash: string;
@@ -38,6 +39,7 @@ export interface IMember {
   userId: string;
   username: string;
   enrolledAt: number;
+  isActive?: boolean;
 }
 
 export interface IClass {

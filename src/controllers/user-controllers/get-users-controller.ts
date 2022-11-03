@@ -25,7 +25,7 @@ export default ({ successResponse, errorResponse, findUsers, sanitizeUserData }:
       if (!isAdmin && users != null)
         users = users.map((userData: any) => sanitizeUserData(userData));
 
-      return successResponse(res, { users: users ?? {} });
+      return successResponse(res, { users: users ?? [] });
     } catch (error) {
       return errorResponse(res, `Get Users Controller Error`, error);
     }

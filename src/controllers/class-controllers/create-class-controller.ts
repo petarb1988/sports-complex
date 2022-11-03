@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import { Interfaces } from "../../config";
 
 interface InputValue {
   successResponse: Function;
@@ -44,7 +45,9 @@ export default ({ successResponse, errorResponse, Const, addNewClass, findClasse
         );
       }
 
-      const existingClasses = await findClasses({ andQuery: { sport, age } });
+      const existingClasses: null | Interfaces.IClass[] = await findClasses({
+        andQuery: { sport, age },
+      });
 
       if (existingClasses) {
         return errorResponse(

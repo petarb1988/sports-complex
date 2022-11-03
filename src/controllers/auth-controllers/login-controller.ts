@@ -37,14 +37,14 @@ export default ({
       if (!user) {
         return errorResponse(
           res,
-          `Login Controller Error: user with username "${username}" not found`
+          `Login Controller Error: user with username ${username} not found`
         );
       }
 
       if (user.token.tempToken) {
         return errorResponse(
           res,
-          `Login Controller Error: user with username "${username}" not activated`
+          `Login Controller Error: user with username ${username} not activated`
         );
       }
 
@@ -55,7 +55,7 @@ export default ({
       });
 
       if (!passwordTest) {
-        return errorResponse(res, `Login Controller Error: wrong password for user "${username}"`);
+        return errorResponse(res, `Login Controller Error: wrong password for user ${username}`);
       }
 
       const tokenString = generateRandomString();

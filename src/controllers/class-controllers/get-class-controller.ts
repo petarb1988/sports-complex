@@ -14,7 +14,7 @@ export default ({ successResponse, errorResponse, findClass, sanitizeClassData }
 
       const isAdmin: boolean = res.locals.isAdmin;
 
-      let sportClass = await findClass({ classId });
+      let sportClass = await findClass({ id: classId });
 
       if (!isAdmin && sportClass !== null) sportClass = sanitizeClassData(sportClass);
 

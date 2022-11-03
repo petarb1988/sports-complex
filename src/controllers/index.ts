@@ -158,7 +158,9 @@ export const createClassController = makeCreateClassController({
 export const updateClassController = makeUpdateClassController({
   successResponse,
   errorResponse,
+  Const,
   findClass,
+  findClasses,
   updateClass,
 });
 export const deleteClassController = makeDeleteClassController({

@@ -1,6 +1,27 @@
 import { Schema, model } from "mongoose";
 import { Interfaces } from "../config";
 
+const memberSchema = new Schema<Interfaces.IMember>(
+  {
+    userId: { type: String, required: true },
+    username: { type: String, required: true },
+    enrolledAt: { type: Number, required: true },
+    isActive: { type: Boolean, default: true, required: true },
+  },
+  { _id: false }
+);
+
+const reviewSchema = new Schema<Interfaces.IReview>(
+  {
+    userId: { type: String, required: true },
+    username: { type: String, required: true },
+    rating: { type: Number, required: true },
+    comment: { type: String, required: true },
+    submittedAt: { type: Number, required: true },
+  },
+  { _id: false }
+);
+
 const classSchema = new Schema<Interfaces.IClass>(
   {
     sport: { type: String, required: true, index: true },
@@ -8,22 +29,8 @@ const classSchema = new Schema<Interfaces.IClass>(
     duration: { type: Number, required: true },
     description: { type: String, required: true },
     schedule: [Number],
-    members: [
-      {
-        userId: String,
-        username: String,
-        enrolledAt: Number,
-      },
-    ],
-    reviews: [
-      {
-        userId: String,
-        username: String,
-        rating: Number,
-        comment: String,
-        submittedAt: Number,
-      },
-    ],
+    members: [memberSchema],
+    reviews: [reviewSchema],
     averageRating: Number,
     createdAt: { type: Number, default: Date.now },
     modifiedAt: { type: Number, default: Date.now },
@@ -50,10 +57,10 @@ export async function findClassesWithPagination({
 }: {
   page: number;
   size: number;
-  queryParams: object;
+  queryParams: any;
 }) {
   const result = await classModel
-    .find({ ...queryParams })
+    .find(queryParams)
     .skip((page - 1) * size)
     .limit(size)
     .lean();
@@ -87,15 +94,17 @@ export async function findClassesWithPaginationBySportsAndAgeLevels({
   });
 }
 
-export async function findOneClass(queryParams: object) {
-  const result = await classModel.findOne({ ...queryParams }).lean();
+export async function findOneClass(queryParams: any) {
+  const { id, ...otherParams } = queryParams;
+  const params = { _id: id, ...otherParams };
+  const result = await classModel.findOne(params).lean();
   if (result === null) return null;
   const { _id, ...other } = result;
   return { id: _id.toString(), ...other };
 }
 
 export async function updateOneClass({ id, updateData }: { id: string; updateData: object }) {
-  const result = await classModel.findByIdAndUpdate(id, { ...updateData }, { new: true }).lean();
+  const result = await classModel.findByIdAndUpdate(id, updateData, { new: true }).lean();
   if (result === null) return null;
   const { _id, ...other } = result;
   return { id: _id.toString(), ...other };

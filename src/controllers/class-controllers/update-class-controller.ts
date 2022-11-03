@@ -4,33 +4,62 @@ import { Interfaces } from "../../config";
 interface InputValue {
   successResponse: Function;
   errorResponse: Function;
+  Const: Readonly<any>;
   findClass: Function;
+  findClasses: Function;
   updateClass: Function;
 }
 
-interface review {
-  userId: string;
-  username: string;
-  rating: number;
-  comment: string;
-  submittedAt: number;
-}
-
-export default ({ successResponse, errorResponse, findClass, updateClass }: InputValue) =>
+export default ({
+    successResponse,
+    errorResponse,
+    Const,
+    findClass,
+    findClasses,
+    updateClass,
+  }: InputValue) =>
   async (req: Request, res: Response) => {
     try {
-      const reqBody: {
+      const {
+        sport,
+        age,
+        description,
+        duration,
+        members,
+        reviews,
+        schedule,
+      }: {
         sport?: number;
         age?: number;
+        description?: string;
+        duration?: number;
         members?: string[];
         schedule?: number[];
-        reviews?: review[];
+        reviews?: Interfaces.IReview[];
       } = req.body;
+
+      if (sport && !Const.allowedSports.includes(sport)) {
+        return errorResponse(
+          res,
+          `Update Class Controller Error: "${sport}" is not a valid sport name`
+        );
+      }
+      if (age && !Const.allowedAgeLevels.includes(age)) {
+        return errorResponse(
+          res,
+          `Update Class Controller Error: "${age}" is not a valid age level name`
+        );
+      }
+      if (duration && (duration < 30 || duration > 60)) {
+        return errorResponse(
+          res,
+          `Update Class Controller Error: duration should be between 30 and 60 minutes`
+        );
+      }
 
       const classId: string = req.params.id;
 
       const sportClass: Interfaces.IClass = await findClass({ id: classId });
-
       if (!sportClass) {
         return errorResponse(
           res,
@@ -38,7 +67,19 @@ export default ({ successResponse, errorResponse, findClass, updateClass }: Inpu
         );
       }
 
-      const newReviews: Interfaces.IReview[] | undefined = reqBody.reviews ?? undefined;
+      if (sport || age) {
+        const existingClasses = await findClasses({
+          andQuery: { sport: sport ?? sportClass.sport, age: age ?? sportClass.age },
+        });
+        if (existingClasses) {
+          return errorResponse(
+            res,
+            `Update Class Controller Error: a class of that sport type and age level already exists`
+          );
+        }
+      }
+
+      const newReviews: Interfaces.IReview[] | undefined = reviews ?? undefined;
       let averageRating: number = 0;
       if (newReviews) {
         let sum: number = 0;
@@ -48,20 +89,12 @@ export default ({ successResponse, errorResponse, findClass, updateClass }: Inpu
         averageRating = sum / newReviews.length;
       }
 
-      const schedule: number[] | undefined = reqBody.schedule ?? undefined;
-
-      const updateData: {
-        sport?: number;
-        age?: number;
-        schedule?: number[];
-        members?: string[];
-        reviews?: Interfaces.IReview[];
-        averageRating?: number;
-        modifiedAt: number;
-      } = {
-        sport: reqBody.sport,
-        age: reqBody.age,
-        members: reqBody.members,
+      const updateData = {
+        sport,
+        age,
+        description,
+        duration,
+        members,
         reviews: newReviews,
         averageRating,
         schedule,

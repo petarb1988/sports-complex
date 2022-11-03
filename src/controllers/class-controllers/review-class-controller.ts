@@ -32,6 +32,19 @@ export default ({
         );
       }
 
+      let isMember: boolean = false;
+
+      sportClass.members?.forEach((member) => {
+        if (member.userId === user.id) isMember = true;
+      });
+
+      if (!isMember) {
+        return errorResponse(
+          res,
+          `Review Class Controller Error: only class members can leave reviews`
+        );
+      }
+
       const reviews: Interfaces.IReview[] = sportClass.reviews ?? [];
 
       const reviewData: Interfaces.IReview = {

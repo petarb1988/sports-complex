@@ -12,7 +12,7 @@ export const successResponse = (res: Response, data: any = null) => {
 export const errorResponse = (
   res: Response,
   message: string = "Something went wrong",
-  error: unknown = { message: "Unknown error" },
+  error: unknown,
   code: number = 500
 ) => {
   logger(message, error);
@@ -20,6 +20,6 @@ export const errorResponse = (
   res.json({
     result: "failure",
     timestamp: Date.now(),
-    message: `${message}: ${JSON.stringify(error)}`,
+    message: !error ? `${message}` : `${message}: ${JSON.stringify(error)}`,
   });
 };

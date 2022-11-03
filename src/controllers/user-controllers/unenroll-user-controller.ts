@@ -34,10 +34,22 @@ export default ({
       }
 
       let members: Interfaces.IMember[] | undefined = sportClass.members;
+      let userIsMember: boolean = false;
       if (members)
-        members = members.filter((member) => {
-          member !== user.id;
+        members = members.map((member: Interfaces.IMember) => {
+          if (member.userId === user.id) {
+            member.isActive = false;
+            userIsMember = true;
+          }
+          return member;
         });
+
+      if (!userIsMember) {
+        return errorResponse(
+          res,
+          `Unenroll User Controller Error: user is not member of the class`
+        );
+      }
 
       let sportClasses: Interfaces.ISportClass[] = user.sportClasses;
       if (sportClasses)
@@ -49,7 +61,7 @@ export default ({
       let updatedClass = await updateClass({ id: classId, updateData: { members } });
       if (!isAdmin && updatedClass !== null) updatedClass = sanitizeClassData(updatedClass);
 
-      successResponse(res, { updatedUser: updatedUser ?? {}, updatedClass: updatedClass ?? {} });
+      successResponse(res, { user: updatedUser ?? {}, class: updatedClass ?? {} });
     } catch (error) {
       return errorResponse(res, `Unenroll User Controller Error`, error);
     }

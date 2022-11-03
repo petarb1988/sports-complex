@@ -59,17 +59,18 @@ export default ({
         return errorResponse(res, `Enroll User Controller Error: class is full`);
       }
 
-      const members: Interfaces.IMember[] | undefined = sportClass.members;
-      if (members) members.push(user.id);
+      const members: Interfaces.IMember[] = sportClass.members ?? [];
+      if (members)
+        members.push({ userId: user.id, username: user.username, enrolledAt: Date.now() });
 
-      const sportClasses: Interfaces.ISportClass[] | undefined = user.sportClasses;
+      const sportClasses: Interfaces.ISportClass[] = user.sportClasses ?? [];
       if (sportClasses) sportClasses.push({ classId, enrolledAt: Date.now() });
 
       const updatedUser = await updateUser({ id: user.id, updateData: { sportClasses } });
       let updatedClass = await updateClass({ id: classId, updateData: { members } });
       if (!isAdmin && updatedClass !== null) updatedClass = sanitizeClassData(updatedClass);
 
-      successResponse(res, { updatedUser: updatedUser ?? {}, updatedClass: updatedClass ?? {} });
+      successResponse(res, { user: updatedUser ?? {}, class: updatedClass ?? {} });
     } catch (error) {
       return errorResponse(res, `Enroll User Controller Error`, error);
     }

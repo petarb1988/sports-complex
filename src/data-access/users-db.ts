@@ -1,14 +1,27 @@
 import { Schema, model } from "mongoose";
 import { Const, Interfaces } from "../config";
 
+const tokenSchema = new Schema<Interfaces.IToken>(
+  {
+    token: String,
+    tempToken: String,
+    createdAt: Number,
+    neverExpire: { type: Boolean, default: false },
+  },
+  { _id: false }
+);
+
+const sportClassSchema = new Schema<Interfaces.ISportClass>(
+  {
+    classId: { type: String, required: true },
+    enrolledAt: { type: Number, required: true },
+  },
+  { _id: false }
+);
+
 const userSchema = new Schema<Interfaces.IUser>(
   {
-    token: {
-      token: String,
-      tempToken: String,
-      createdAt: Number,
-      neverExpire: { type: Boolean, default: false },
-    },
+    token: tokenSchema,
     username: { type: String, required: true, index: true },
     hash: { type: String, required: true },
     salt: { type: String, required: true },
@@ -18,7 +31,7 @@ const userSchema = new Schema<Interfaces.IUser>(
     firstName: { type: String, required: true },
     lastName: { type: String, required: true },
     birthDate: { type: String, required: true },
-    sportClasses: [{ classId: String, enrolledAt: Number }],
+    sportClasses: [sportClassSchema],
     createdAt: { type: Number, default: Date.now },
     modifiedAt: { type: Number, default: Date.now },
   },
@@ -67,8 +80,9 @@ export async function findUsersByIdsWithPagination({
   size: number;
   ids: string[];
 }) {
+  if (ids.length === 0) return null;
   const result = await userModel
-    .find({ id: { $in: ids } })
+    .find({ _id: { $in: ids } })
     .skip((page - 1) * size)
     .limit(size)
     .lean();
