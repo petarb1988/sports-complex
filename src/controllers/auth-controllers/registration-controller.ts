@@ -1,13 +1,3 @@
-/*
-url: POST api/register
-request body: username {String}
-              password {String}
-              email {String}
-              firstName {String}
-              lastName {String}
-              birthDate {String}
-*/
-
 import { Request, Response } from "express";
 
 interface InputValue {
@@ -19,6 +9,7 @@ interface InputValue {
   sendEmail: Function;
   addNewUser: Function;
   findUsers: Function;
+  getUserAge: Function;
 }
 
 export default ({
@@ -30,6 +21,7 @@ export default ({
     sendEmail,
     addNewUser,
     findUsers,
+    getUserAge,
   }: InputValue) =>
   async (req: Request, res: Response): Promise<void> => {
     try {
@@ -77,6 +69,10 @@ export default ({
         );
       } else if (emailExists) {
         return errorResponse(res, `Registration Controller Error: email address already in use`);
+      }
+
+      if (!getUserAge(birthDate)) {
+        return errorResponse(res, `Registration Controller Error: invalid birthDate`);
       }
 
       const activationCode: string = generateRandomNumber().toString();

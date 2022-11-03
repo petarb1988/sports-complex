@@ -57,6 +57,7 @@ export const registrationController = makeRegistrationController({
   sendEmail,
   addNewUser,
   findUsers,
+  getUserAge,
 });
 export const activationController = makeActivationController({
   successResponse,
@@ -104,6 +105,7 @@ export const createUserController = makeCreateUserController({
   encryptPassword,
   addNewUser,
   findUsers,
+  getUserAge,
 });
 export const updateUserController = makeUpdateUserController({
   successResponse,

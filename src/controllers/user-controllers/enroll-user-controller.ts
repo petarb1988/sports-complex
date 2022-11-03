@@ -44,10 +44,14 @@ export default ({
         );
       }
 
-      const userAge: number = getUserAge(user.birthDate);
+      const userAge: number | null = getUserAge(user.birthDate);
+      if (!userAge) {
+        return errorResponse(res, `Enroll User Controller Error: invalid birthDate`);
+      }
       if (
-        userAge <= Const.ageLevelLimits[sportClass.age][0] ||
-        userAge > Const.ageLevelLimits[sportClass.age][1]
+        userAge &&
+        (userAge <= Const.ageLevelLimits[sportClass.age][0] ||
+          userAge > Const.ageLevelLimits[sportClass.age][1])
       ) {
         return errorResponse(
           res,

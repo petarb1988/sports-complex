@@ -8,6 +8,7 @@ interface InputValue {
   encryptPassword: Function;
   addNewUser: Function;
   findUsers: Function;
+  getUserAge: Function;
 }
 
 export default ({
@@ -18,6 +19,7 @@ export default ({
     encryptPassword,
     addNewUser,
     findUsers,
+    getUserAge,
   }: InputValue) =>
   async (req: Request, res: Response): Promise<void> => {
     try {
@@ -66,6 +68,10 @@ export default ({
         );
       } else if (emailExists) {
         return errorResponse(res, `Create User Controller Error: email address already in use`);
+      }
+
+      if (!getUserAge(birthDate)) {
+        return errorResponse(res, `Registration Controller Error: invalid birthDate`);
       }
 
       if (!role || (role && !Const.userRoles.includes(role))) {
