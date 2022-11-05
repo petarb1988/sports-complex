@@ -104,7 +104,7 @@ export default ({
         If you miss the 24 hour deadline contact our web admins.`,
       });
 
-      return successResponse(res, { user });
+      return successResponse(res);
     } catch (error) {
       return errorResponse(res, `Registration Controller Error`, error);
     }
