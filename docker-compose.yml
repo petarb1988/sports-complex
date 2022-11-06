@@ -1,0 +1,17 @@
+version: "1.0.0"
+services:
+  sports-complex:
+    container_name: backend-container
+    restart: always
+    build: .
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mongo
+  mongo:
+    container_name: backend-mongo
+    image: mongo
+    expose:
+      - "27017"
+    ports:
+      - "27017:27017"
