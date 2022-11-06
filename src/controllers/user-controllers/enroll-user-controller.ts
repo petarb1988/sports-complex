@@ -5,7 +5,7 @@ interface InputValue {
   successResponse: Function;
   errorResponse: Function;
   Const: Readonly<any>;
-  findClass: Function;
+  findClassById: Function;
   updateUser: Function;
   updateClass: Function;
   getUserAge: Function;
@@ -16,7 +16,7 @@ export default ({
     successResponse,
     errorResponse,
     Const,
-    findClass,
+    findClassById,
     updateUser,
     updateClass,
     getUserAge,
@@ -35,7 +35,7 @@ export default ({
         );
       }
 
-      const sportClass: Interfaces.IClass | null = await findClass({ id: classId });
+      const sportClass: Interfaces.IClass | null = await findClassById(classId);
 
       if (!sportClass) {
         return errorResponse(

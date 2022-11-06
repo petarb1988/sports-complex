@@ -93,6 +93,13 @@ export async function findUsersByIdsWithPagination({
   });
 }
 
+export async function findOneUserById(id: string) {
+  const result = await userModel.findById(id).lean();
+  if (result === null) return null;
+  const { _id, ...other } = result;
+  return { id: _id.toString(), ...other };
+}
+
 export async function findOneUser(queryParams: object) {
   const result = await userModel.findOne({ ...queryParams }).lean();
   if (result === null) return null;
@@ -101,7 +108,9 @@ export async function findOneUser(queryParams: object) {
 }
 
 export async function updateOneUser({ id, updateData }: { id: string; updateData: object }) {
-  const result = await userModel.findByIdAndUpdate(id, { ...updateData }, { new: true }).lean();
+  const result = await userModel
+    .findByIdAndUpdate(id, { ...updateData, modifiedAt: Date.now() }, { new: true })
+    .lean();
   if (result === null) return null;
   const { _id, ...other } = result;
   return { id: _id.toString(), ...other };

@@ -4,7 +4,7 @@ import { Interfaces } from "../../config";
 interface InputValue {
   successResponse: Function;
   errorResponse: Function;
-  findClass: Function;
+  findClassById: Function;
   updateUser: Function;
   updateClass: Function;
   sanitizeClassData: Function;
@@ -13,7 +13,7 @@ interface InputValue {
 export default ({
     successResponse,
     errorResponse,
-    findClass,
+    findClassById,
     updateUser,
     updateClass,
     sanitizeClassData,
@@ -24,7 +24,7 @@ export default ({
       const classId: string = req.params.id;
       const user = res.locals.user;
 
-      const sportClass: Interfaces.IClass = await findClass({ id: classId });
+      const sportClass: Interfaces.IClass = await findClassById(classId);
 
       if (!sportClass) {
         return errorResponse(

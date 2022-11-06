@@ -96,7 +96,7 @@ export default ({
         role: role ?? Const.userRoleUser,
       });
 
-      return successResponse(res, { newUser: user });
+      return successResponse(res, { newUser: user ?? {} });
     } catch (error) {
       return errorResponse(res, `Create User Controller Error`, error);
     }

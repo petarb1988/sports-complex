@@ -4,11 +4,11 @@ import { Interfaces } from "../../config";
 interface InputValue {
   successResponse: Function;
   errorResponse: Function;
-  findClass: Function;
+  findClassById: Function;
   findUsersByIds: Function;
 }
 
-export default ({ successResponse, errorResponse, findClass, findUsersByIds }: InputValue) =>
+export default ({ successResponse, errorResponse, findClassById, findUsersByIds }: InputValue) =>
   async (req: Request, res: Response) => {
     try {
       const classId: string = req.params.id;
@@ -17,7 +17,7 @@ export default ({ successResponse, errorResponse, findClass, findUsersByIds }: I
       const startDate: number = !req.query.start ? 0 : +`${req.query.start}`;
       const endDate: number = !req.query.end ? Date.now() : +`${req.query.end}`;
 
-      const sportClass: Interfaces.IClass = await findClass({ id: classId });
+      const sportClass: Interfaces.IClass = await findClassById(classId);
       const membersIds: string[] | null = !sportClass.members
         ? null
         : sportClass.members

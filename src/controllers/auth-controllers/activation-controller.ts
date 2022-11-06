@@ -17,6 +17,11 @@ interface InputValue {
 export default ({ successResponse, errorResponse, Const, findUser, updateUser }: InputValue) =>
   async (req: Request, res: Response): Promise<void> => {
     try {
+      const token: string | undefined | null = req.session?.userToken;
+      if (token) {
+        return errorResponse(res, `Activation Controller Error: already logged in`);
+      }
+
       const userToken: string = `${req.query.t}`;
       const activationCode: string = `${req.query.c}`;
 

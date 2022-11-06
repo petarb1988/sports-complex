@@ -4,6 +4,7 @@ import {
   findUsersWithPagination,
   findUsersByIdsWithPagination,
   findOneUser,
+  findOneUserById,
   updateOneUser,
   deleteOneUser,
 } from "./users-db";
@@ -13,6 +14,7 @@ import {
   findClassesWithPagination,
   findClassesWithPaginationBySportsAndAgeLevels,
   findOneClass,
+  findOneClassById,
   updateOneClass,
   deleteOneClass,
 } from "./classes-db";
@@ -25,6 +27,7 @@ export {
   findUsersWithPagination,
   findUsersByIdsWithPagination,
   findOneUser,
+  findOneUserById,
   updateOneUser,
   deleteOneUser,
   //classes
@@ -32,6 +35,7 @@ export {
   findClassesWithPagination,
   findClassesWithPaginationBySportsAndAgeLevels,
   findOneClass,
+  findOneClassById,
   updateOneClass,
   deleteOneClass,
 };

@@ -26,6 +26,11 @@ export default ({
   }: InputValue) =>
   async (req: Request, res: Response) => {
     try {
+      const token: string | undefined | null = req.session?.userToken;
+      if (token) {
+        return errorResponse(res, `Login Controller Error: already logged in`);
+      }
+
       const {
         username,
         password,

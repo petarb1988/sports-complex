@@ -17,9 +17,7 @@ export default ({ successResponse, errorResponse, findUsers, sanitizeUserData }:
 
       const searchRegex: RegExp | null = !search ? null : new RegExp(search, "i");
 
-      const orQuery = !search
-        ? {}
-        : { username: searchRegex, firstName: searchRegex, lastName: searchRegex };
+      const orQuery = !search ? {} : { username: searchRegex };
 
       let users = await findUsers({ page, size, orQuery });
       if (!isAdmin && users != null)

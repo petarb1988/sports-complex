@@ -15,11 +15,10 @@ import {
 export const userRoutes = express.Router();
 
 userRoutes.get(
-  "/admin/period/:id",
+  "/period/:id",
   tokenChecker({ onlyAdmin: true }),
   getUsersEnrolledDuringPeriodController
 );
-userRoutes.get("/admin/:id", tokenChecker({ onlyAdmin: true }), getUserController);
 userRoutes.get("/enroll/:id", tokenChecker(), enrollUserController);
 userRoutes.get("/unenroll/:id", tokenChecker(), unenrollUserController);
 userRoutes.get("/multi", tokenChecker(), getUsersController);

@@ -5,7 +5,7 @@ interface InputValue {
   successResponse: Function;
   errorResponse: Function;
   Const: Readonly<any>;
-  findClass: Function;
+  findClassById: Function;
   findClasses: Function;
   updateClass: Function;
 }
@@ -14,7 +14,7 @@ export default ({
     successResponse,
     errorResponse,
     Const,
-    findClass,
+    findClassById,
     findClasses,
     updateClass,
   }: InputValue) =>
@@ -59,7 +59,7 @@ export default ({
 
       const classId: string = req.params.id;
 
-      const sportClass: Interfaces.IClass = await findClass({ id: classId });
+      const sportClass: Interfaces.IClass = await findClassById(classId);
       if (!sportClass) {
         return errorResponse(
           res,

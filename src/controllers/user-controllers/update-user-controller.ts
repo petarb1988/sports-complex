@@ -39,6 +39,13 @@ export default ({ successResponse, errorResponse, updateUser, sanitizeUserData }
         );
       }
 
+      if (!isAdmin && (username || role)) {
+        return errorResponse(
+          res,
+          `Update User Controller Error: only admin user can update this feature`
+        );
+      }
+
       const updateData: {
         username?: string;
         password?: string;
@@ -63,7 +70,6 @@ export default ({ successResponse, errorResponse, updateUser, sanitizeUserData }
       }
 
       let updatedUser = await updateUser({ id: userId, updateData });
-      if (!isAdmin) updatedUser = sanitizeUserData(updatedUser);
 
       return successResponse(res, { user: updatedUser ?? {} });
     } catch (error) {

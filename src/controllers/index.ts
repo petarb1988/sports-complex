@@ -11,6 +11,7 @@ import {
   // users
   addNewUser,
   findUser,
+  findUserById,
   findUsers,
   findUsersByIds,
   updateUser,
@@ -20,6 +21,7 @@ import {
   // classes
   addNewClass,
   findClass,
+  findClassById,
   findClasses,
   findClassesBySportsAndAgeLevels,
   updateClass,
@@ -82,7 +84,7 @@ export const logoutController = makeLogoutController({
 export const getUserController = makeGetUserController({
   successResponse,
   errorResponse,
-  findUser,
+  findUserById,
   sanitizeUserData,
 });
 export const getUsersController = makeGetUsersController({
@@ -94,7 +96,7 @@ export const getUsersController = makeGetUsersController({
 export const getUsersEnrolledDuringPeriodController = makeGetUsersEnrolledDuringPeriodController({
   successResponse,
   errorResponse,
-  findClass,
+  findClassById,
   findUsersByIds,
 });
 export const createUserController = makeCreateUserController({
@@ -122,7 +124,7 @@ export const enrollUserController = makeEnrollUserController({
   successResponse,
   errorResponse,
   Const,
-  findClass,
+  findClassById,
   updateUser,
   updateClass,
   getUserAge,
@@ -131,7 +133,7 @@ export const enrollUserController = makeEnrollUserController({
 export const unenrollUserController = makeUnenrollUserController({
   successResponse,
   errorResponse,
-  findClass,
+  findClassById,
   updateUser,
   updateClass,
   sanitizeClassData,
@@ -140,7 +142,7 @@ export const unenrollUserController = makeUnenrollUserController({
 export const getClassController = makeGetClassController({
   successResponse,
   errorResponse,
-  findClass,
+  findClassById,
   sanitizeClassData,
 });
 export const getClassesController = makeGetClassesController({
@@ -161,7 +163,7 @@ export const updateClassController = makeUpdateClassController({
   successResponse,
   errorResponse,
   Const,
-  findClass,
+  findClassById,
   findClasses,
   updateClass,
 });
@@ -173,7 +175,7 @@ export const deleteClassController = makeDeleteClassController({
 export const reviewClassController = makeReviewClassController({
   successResponse,
   errorResponse,
-  findClass,
+  findClassById,
   updateClass,
   sanitizeClassData,
 });

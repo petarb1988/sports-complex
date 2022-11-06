@@ -20,7 +20,7 @@ export default ({ successResponse, errorResponse, deleteUser }: InputValue) =>
         );
       }
 
-      return successResponse(res, { deletedUser });
+      return successResponse(res, { deletedUser: deletedUser ?? {} });
     } catch (error) {
       return errorResponse(res, `Delete User Controller Error`, error);
     }

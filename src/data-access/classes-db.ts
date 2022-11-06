@@ -94,17 +94,24 @@ export async function findClassesWithPaginationBySportsAndAgeLevels({
   });
 }
 
+export async function findOneClassById(id: string) {
+  const result = await classModel.findById(id).lean();
+  if (result === null) return null;
+  const { _id, ...other } = result;
+  return { id: _id.toString(), ...other };
+}
+
 export async function findOneClass(queryParams: any) {
-  const { id, ...otherParams } = queryParams;
-  const params = { _id: id, ...otherParams };
-  const result = await classModel.findOne(params).lean();
+  const result = await classModel.findOne(queryParams).lean();
   if (result === null) return null;
   const { _id, ...other } = result;
   return { id: _id.toString(), ...other };
 }
 
 export async function updateOneClass({ id, updateData }: { id: string; updateData: object }) {
-  const result = await classModel.findByIdAndUpdate(id, updateData, { new: true }).lean();
+  const result = await classModel
+    .findByIdAndUpdate(id, { ...updateData, modifiedAt: Date.now() }, { new: true })
+    .lean();
   if (result === null) return null;
   const { _id, ...other } = result;
   return { id: _id.toString(), ...other };

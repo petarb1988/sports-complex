@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import { Interfaces } from "../../config";
 
 interface InputValue {
   successResponse: Function;
@@ -58,10 +59,12 @@ export default ({
         queryParams.ages = Const.allowedAgeLevels;
       }
 
-      let sportClasses = await findClassesBySportsAndAgeLevels(queryParams);
+      let sportClasses: Interfaces.IClass[] = await findClassesBySportsAndAgeLevels(queryParams);
 
       if (!isAdmin && sportClasses !== null)
-        sportClasses = sportClasses.map((sportClass: any) => sanitizeClassData(sportClass));
+        sportClasses = sportClasses.map((sportClass: Interfaces.IClass) =>
+          sanitizeClassData(sportClass)
+        );
 
       return successResponse(res, { classes: sportClasses ?? [] });
     } catch (error) {

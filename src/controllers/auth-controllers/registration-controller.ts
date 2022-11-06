@@ -25,6 +25,11 @@ export default ({
   }: InputValue) =>
   async (req: Request, res: Response): Promise<void> => {
     try {
+      const userToken: string | undefined | null = req.session?.userToken;
+      if (userToken) {
+        return errorResponse(res, `Registration Controller Error: already logged in`);
+      }
+
       const {
         username,
         password,
